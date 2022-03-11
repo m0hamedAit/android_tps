@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80px"
+        android:layout_height="100px"
         android:background="#1B262C"
         android:gravity="center|left"
         android:orientation="horizontal"
@@ -18,10 +18,12 @@
 
         <Button
             android:id="@+id/previous"
-            android:layout_width="30px"
-            android:layout_height="30px"
+            android:layout_width="35px"
+            android:layout_height="35px"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/previousicon" />
+            android:background="@drawable/previousicon"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
@@ -37,7 +39,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80px"
+        android:layout_height="100px"
         android:background="#1B262C"
         android:gravity="center"
         android:orientation="horizontal">

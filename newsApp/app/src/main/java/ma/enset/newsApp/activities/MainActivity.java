@@ -3,6 +3,7 @@ package ma.enset.newsApp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         EditText datefield = findViewById(R.id.dateField);
         Button button = findViewById(R.id.submitButton);
 
+
         List<Article> articles = new ArrayList<>();
         ArticleCardAdapter adapter = new ArticleCardAdapter(this, R.layout.newscard, articles);
         listView.setAdapter(adapter);
@@ -46,6 +48,26 @@ public class MainActivity extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         RestApiService restApiService = retrofit.create(RestApiService.class);
+
+        //load top headlines
+        articles.clear();
+        Call<ArticleListResponse> callArticles = restApiService.getTopHeadlines("us", "3d7d33afce2b4bb6942bdd93fc5e01d9");
+        callArticles.enqueue(new Callback<ArticleListResponse>() {
+            @Override
+            public void onResponse(Call<ArticleListResponse> call, Response<ArticleListResponse> response) {
+                ArticleListResponse listArticles = response.body();
+                for (Article article : listArticles.getArticles()) {
+                    articles.add(article);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<ArticleListResponse> call, Throwable t) {
+                Log.e("Failure", "Erreur");
+            }
+        });
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -63,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 String key = keyfield.getText().toString();
                 String date = datefield.getText().toString();
                 if (key.length() > 0 & date.length() > 0 & date.matches(regex)) {
-                    Call<ArticleListResponse> callArticles = restApiService.getArticlesbyKeyDate(key, date, getString(R.string.ApiKey));
+                    Call<ArticleListResponse> callArticles = restApiService.getArticlesbyKeyDate(key, date,"3d7d33afce2b4bb6942bdd93fc5e01d9");
                     callArticles.enqueue(new Callback<ArticleListResponse>() {
                         @Override
                         public void onResponse(Call<ArticleListResponse> call, Response<ArticleListResponse> response) {
