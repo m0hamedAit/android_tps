@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">studentsManagement</string>
+    <string name="page_title">Students</string>
+    <string name="search">Search</string>
+    <string name="content_description_search">Search</string>
+
+    <string-array name="sexe">
+        <item>M</item>
+        <item>F</item>
+    </string-array>
+</resources>
