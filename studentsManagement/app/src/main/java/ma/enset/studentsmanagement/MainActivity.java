@@ -62,9 +62,11 @@ public class MainActivity extends AppCompatActivity {
         String data = sharedPreferences.getString("list_students", null);
         Type type = new TypeToken<ArrayList<Student>>(){}.getType();
         ArrayList<Student> list = gson.fromJson(data, type);
-        for(Student st:list){
-            studentsList.add(st);
-            System.out.println(st.getTel().toString());
+        if(list!=null) {
+            for (Student st : list) {
+                studentsList.add(st);
+                System.out.println(st.getTel().toString());
+            }
         }
         if(studentsList == null){
             studentsList = new ArrayList<>();
