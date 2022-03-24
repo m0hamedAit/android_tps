@@ -10,12 +10,10 @@ class Question {
 
   @override
   String toString() {
-    String text = "\n$title($description) : \n";
+    String text = "\n$title - $description : \n";
 
     reponses.forEach((element) {
-      if (element.correct == true) {
         text += element.toString();
-      }
     });
 
     return text;

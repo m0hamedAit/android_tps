@@ -1,6 +1,8 @@
 import 'Question.dart';
 import 'Questionnaire.dart';
 import 'Response.dart';
+import 'dart:io';
+import 'dart:convert';
 
 void main() {
   List<Question> questions = [
@@ -19,7 +21,7 @@ void main() {
         [
           new Response("String \"Text\";", false),
           new Response("String text = 'text';", false),
-          new Response("String text = \"text\";)", true)
+          new Response("String text = \"text\";", true)
         ],
         3),
     new Question(
@@ -38,14 +40,31 @@ void main() {
   int score = 0;
   print("--------------------------------------");
   print("${questionnaire.title} : ");
-  questionnaire.questions.forEach((question) => {
+  questionnaire.questions.forEach((question) {
     print("\t ${question.title} - ${question.description}");
+    var i = 1;
     question.reponses.forEach((response) {
-      print("\t\t ${response.title}");
-     });
+      print("\t\t $i - ${response.title}");
+      i++;
+    });
+    print("reponse : ");
+    var r;
+    do {
+      r = stdin.readLineSync(encoding: utf8);
+      r = int.parse(r);
+    } while (r <= 0 || r > 3);
 
-    
-
+    if (question.reponses[r - 1].correct) {
+      score += question.score;
+    }
   });
-  
+  print("\t\t\t-----------------");
+  print("\t\t\tYour score is : $score");
+  print("\t\t\t-----------------");
+  print(
+      "\n--------------------------------------------------------------------\n");
+  print("Answers Are : ");
+  questionnaire.questions.forEach((q) {
+    print(q);
+  });
 }
